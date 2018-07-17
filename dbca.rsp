@@ -39,7 +39,11 @@ gdbName=radio
 # Default value : <db_name> specified in GDBNAME
 # Mandatory     : No
 #-----------------------------------------------------------------------------
+<<<<<<< HEAD
 sid=radio1
+=======
+sid=radio
+>>>>>>> c912a382f9dcb5fa649f8f3f683008fc1803027e
 
 #-----------------------------------------------------------------------------
 # Name          : databaseConfigType
