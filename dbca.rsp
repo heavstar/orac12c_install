@@ -39,7 +39,7 @@ gdbName=radio
 # Default value : <db_name> specified in GDBNAME
 # Mandatory     : No
 #-----------------------------------------------------------------------------
-sid=radio
+sid=radio1
 
 #-----------------------------------------------------------------------------
 # Name          : databaseConfigType
