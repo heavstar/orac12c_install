@@ -1,0 +1,50 @@
+#!/bin/bash
+# chkconfig: 345 99 10
+# description: Startup Script for Oracle Databases
+# /etc/rc.d/init.d/dbstart
+export ORACLE_BASE=/home/app/oracle
+export ORACLE_HOME=$ORACLE_BASE/product/12c
+export ORACLE_SID=radio
+export PATH=$PATH:$ORACLE_HOME/bin
+ORA_OWNR="oracle"
+# if the executables do not exist -- display error
+if [ ! -f $ORACLE_HOME/bin/dbstart -o ! -d $ORACLE_HOME ]
+then
+echo "Oracle startup: cannot start"
+exit 1
+fi
+# depending on parameter -- startup, shutdown, restart
+# of the instance and listener or usage display
+case "$1" in
+start)
+# Oracle listener and instance startup
+echo -n "Starting Oracle: "
+su - $ORA_OWNR -c "$ORACLE_HOME/bin/lsnrctl start"
+su - $ORA_OWNR -c "$ORACLE_HOME/bin/dbstart"
+touch /var/lock/Oracle
+echo "Oracle start OK"
+;;
+stop)
+# Oracle listener and instance shutdown
+echo -n "Shutdown Oracle: "
+su - $ORA_OWNR -c "$ORACLE_HOME/bin/dbshut"
+su - $ORA_OWNR -c "$ORACLE_HOME/bin/lsnrctl stop"
+rm -f /var/lock/Oracle
+echo "Oracle stop OK"
+;;
+status)
+   if [ -f /var/lock/Oracle ]; then
+      echo $0 started.
+      else
+      echo $0 stopped.
+   fi
+   ;;
+reload|restart)
+$0 stop
+$0 start
+;;
+*)
+echo "Usage: `basename $0` start|stop|restart|reload"
+exit 1
+esac
+exit 0
